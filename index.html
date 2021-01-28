@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="phone-btn-minus" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="phone-input-quantity" type="text" class="form-control text-center" value="1">
+                           <button id="phone-btn-plus" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="phone-price">10</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" value="1">
+                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$59</h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$1,278</h5>
+                        <h5>$0</h5>
+                        <h5>$1,278</h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      //phone plus input and price calculation
+      document.getElementById("phone-btn-plus").addEventListener("click", function () {
+         let incrementedInputQuantity = incrementInput("phone-input-quantity")
+         calculateIncrementPrice("phone-price", incrementedInputQuantity);
+      })
+
+      //phone minus input and price calculation
+      document.getElementById("phone-btn-minus").addEventListener("click", function () {
+         let checkInputQuantity = document.getElementById("phone-input-quantity").value;
+         if (checkInputQuantity == 1) {
+            document.getElementById("phone-input-quantity").setAttribute("disabled", "disabled")
+         }
+         else {
+            let decrementedInputQuantity = decrementInput("phone-input-quantity")
+            calculateDecrementPrice("phone-price", decrementedInputQuantity);
+         }
+      })
+
+      //increment decrement function
+      function incrementInput(id){
+         let inputQuantity = document.getElementById(id).value;
+         let inputQuantityInNumber = parseInt(inputQuantity);
+         let incrementInputQuantityNumber = inputQuantityInNumber + 1;
+         document.getElementById(id).value = incrementInputQuantityNumber;
+         return incrementInputQuantityNumber;
+      }
+      
+      //decrement decrement function
+      function decrementInput(id){
+         let inputQuantity = document.getElementById(id).value;
+         let inputQuantityInNumber = parseInt(inputQuantity);
+         let decrementedInputQuantityNumber = inputQuantityInNumber - 1;
+         document.getElementById(id).value = decrementedInputQuantityNumber;
+         return decrementedInputQuantityNumber;
+      }
+
+      //calculation function for increment 
+      function calculateIncrementPrice(id, inputNumber) {
+         let innerPrice = document.getElementById(id).innerText;
+         let innerPriceInNumber = parseFloat(innerPrice);
+
+         let newPrice = 10 * inputNumber;
+         document.getElementById(id).innerText = newPrice;
+      }
+      
+      //calculating function for decrement
+      function calculateDecrementPrice(id, inputNumber){
+         let innerPrice = document.getElementById(id).innerText;
+         let innerPriceInNumber = parseInt(innerPrice);
+         
+         let netPrice = innerPriceInNumber / (inputNumber + 1);
+         let newPrice = netPrice * inputNumber;
+         document.getElementById(id).innerText = newPrice;
+      }
+   </script>
+</body>
+
+</html>
